@@ -58,7 +58,7 @@ const getDailySalesData = async (startDate, endDate) => {
       {
         $match: {
           createdAt: { $gte: startDate, $lt: endDate },
-          orderStatus: "completed",
+          // orderStatus: "completed",
         },
       },
       {
@@ -74,7 +74,9 @@ const getDailySalesData = async (startDate, endDate) => {
     const dateArray = await getDateInRange(startDate, endDate);
 
     return dateArray.map((date) => {
-      const foundData = dailySalesData.find((item) => item._id === date);
+      const foundData = dailySalesData.find(
+        (item) => item._id === date.toISOString().split("T")[0]
+      );
 
       return {
         date,
